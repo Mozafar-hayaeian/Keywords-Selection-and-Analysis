@@ -2,20 +2,20 @@
 
 University NLP project on extracting and evaluating keywords from biomedical abstracts and benchmark datasets.
 
-The notebook implements Tasks 1–10 of the project: PubMed collection, TF-IDF/RAKE/YAKE/TextRank extraction, title-based filtering, a supervised candidate ranker, word2vec features, evaluation of SEKE predictions, and evaluation on Inspec, KDD, and SemEval2017.
+The notebook implements Tasks 1–10: PubMed collection, TF-IDF/RAKE/YAKE/TextRank extraction, title-based filtering, supervised candidate ranking, word2vec features, SEKE evaluation, and evaluation on Inspec, KDD, and SemEval2017.
 
 ## Project files
 
-- `Project1_Keywords_Selection_and_Analysis.ipynb` — main notebook, with the implementation organized by task.
-- `requirements.txt` — Python packages used by the notebook.
-- `data/database.csv` — expected PubMed snapshot. The original snapshot is not included in this repository yet; see the data instructions below.
-- `benchmarks/` — source ZIP files required by Task 10.
-- `models/` — downloaded word2vec model files used by Tasks 6 and 9.
-- `results/metrics_*.csv` — saved evaluation tables from the project. The notebook can regenerate them; precision–recall plots are generated locally.
+- [Main notebook](Project1_Keywords_Selection_and_Analysis.ipynb) — tasks and analysis in execution order.
+- [requirements.txt](requirements.txt) — Python packages for the notebook environment.
+- [data/](data/) — expected location of the PubMed snapshot and generated benchmark tables.
+- [benchmarks/](benchmarks/) — source benchmark ZIP files needed for Task 10.
+- [results/](results/) — saved evaluation metric tables.
+- [SEKE training workflow](docs/SEKE_TRAINING.md) — explains the separate Conda environment and the two SEKE training workflows.
 
 ## Setup
 
-Use Python 3.10 or 3.11. From the repository directory:
+Use Python 3.10 or 3.11. From the repository root:
 
 ```bash
 python -m venv .venv
@@ -23,10 +23,10 @@ python -m venv .venv
 
 Activate the environment:
 
-- Windows PowerShell: `.venv\Scripts\Activate.ps1`
+- Windows PowerShell: `.venv\\Scripts\\Activate.ps1`
 - macOS/Linux: `source .venv/bin/activate`
 
-Install the packages and start Jupyter:
+Install dependencies and launch Jupyter:
 
 ```bash
 python -m pip install --upgrade pip
@@ -34,45 +34,42 @@ pip install -r requirements.txt
 jupyter notebook
 ```
 
-Open the notebook and run the cells in order. Some later task cells reuse functions and variables defined in earlier cells, so they are not intended to be run independently.
+Run notebook cells in order because later tasks reuse functions and variables defined earlier. Optional package/data-download cells are commented out and should be enabled only if the relevant resource is missing.
 
-## Data and external dependencies
+## Data and reproducibility
 
 ### PubMed database
 
-The notebook's Task 1 cell collects records from NCBI PubMed and writes `data/database.csv`. It uses a fixed search query and attempts to collect up to 1,000 records with author keywords. PubMed may change over time, so a newly collected database may not match the exact snapshot used for the saved metrics.
+Task 1 can collect a fresh sample from NCBI PubMed and save it to `data/database.csv`. It overwrites that file, and PubMed records may change over time. Do not rerun Task 1 when reproducing the saved results unless you intend to rebuild all dependent outputs.
 
-**To reproduce the saved results using the original data**, extract `Report_Evidence_Bundle/Data_01/database.csv` from the provided evidence archive and place it at `data/database.csv`. This exact snapshot is not included in the repository yet. Alternatively, run Task 1 to collect a fresh dataset, but expect the results to differ.
+For exact reproduction, place the original `database.csv` snapshot in `data/`. The snapshot is not currently tracked in this repository.
 
-Set the `NCBI_EMAIL` environment variable before running Task 1 if you want to provide an email address to NCBI. An NCBI API key is optional; set `NCBI_API_KEY` locally if you have one. Do not commit personal emails or API keys.
+### Task 10 benchmark datasets
 
-### Benchmark datasets
-
-Task 10 expects these ZIP files in `benchmarks/` (leave them zipped):
+The notebook does **not** download the benchmark ZIP files automatically. Place these original archives in the top-level `benchmarks/` directory without extracting them:
 
 - `Inspec.zip`
 - `kdd.zip`
 - `SemEval2017.zip`
 
-Obtain the datasets from the upstream [KeywordExtractor-Datasets repository](https://github.com/INESCTEC/KeywordExtractor-Datasets) and check its terms before use. The notebook converts them into processed CSV tables under `data/benchmarks/`.
+The Task 10 preparation cell reads those ZIP files and creates processed tables under `data/benchmarks/`, plus JSONL inputs in the external SEKE repository. The ZIP files are inputs; the generated CSV tables are outputs. Obtain the datasets from the upstream [KeywordExtractor-Datasets repository](https://github.com/INESCTEC/KeywordExtractor-Datasets) and follow its terms of use.
 
-### Word2vec model
+### PubMed word2vec model
 
-The notebook's model-download cells fetch the PubMed 200-dimensional word2vec model from Internet Archive and extract it under `models/`. The model is large and is not expected to be committed to this repository.
+Tasks 6 and 9 use the large PubMed word2vec model at `models/pubmed2018_w2v_200D.bin`. The notebook's model download cells are optional. Enable them only if the model is missing; the file is not tracked in Git.
 
 ### SEKE
 
-Tasks 8 and 10 evaluate predictions from the separate [SEKE keyword-extraction implementation](https://github.com/matejMartinc/SEKE_keyword_extraction). Clone that repository alongside this project, or set the `SEKE_FOLDER` environment variable to its location. The default expected folder name is `SEKE_keyword_extraction`. If results are stored somewhere else, set `SEKE_RESULTS_FOLDER` to the results directory.
+SEKE is a separate project and uses its own Conda environment and dependencies. Clone or extract [SEKE_keyword_extraction](https://github.com/matejMartinc/SEKE_keyword_extraction) separately. The notebook expects the repository at `SEKE_keyword_extraction/` by default. If it is elsewhere, set the `SEKE_FOLDER` environment variable before starting Jupyter.
 
-SEKE has its own heavier dependencies and should be installed and run according to its upstream instructions. The main notebook's `requirements.txt` does not install SEKE or its model dependencies.
+See [docs/SEKE_TRAINING.md](docs/SEKE_TRAINING.md) for the distinction between the PubMed run (Task 8) and the three benchmark runs (Task 10).
 
 ## Outputs
 
-The saved metric tables are in `results/`. Running the notebook generates precision–recall plots and can regenerate the evaluation tables. Task 7 and Task 9 also save test predictions locally.
+The tracked `results/metrics_*.csv` files are saved evaluation tables. Running the notebook can regenerate metric tables and precision–recall plots locally. Task 7 and Task 9 also write prediction files locally.
 
-## Notes on reproducibility
+## Notes
 
-- The evaluation split used by the supervised tasks is based on `test_size=0.2` and `random_state=42`.
-- Tasks 4–6 and later reuse helpers defined by earlier cells; execute the notebook from top to bottom.
-- The benchmark ZIP files and the separate SEKE repository are external inputs. Results may be skipped or unavailable until their expected files are present.
-- For strict comparison with past results, retain the original database snapshot, prediction files, and external SEKE outputs alongside the metrics.
+- The main PubMed supervised tasks use `test_size=0.2` and `random_state=42`.
+- Task 10 makes a separate 80/20 split for each benchmark dataset using the same seed.
+- The SEKE output files are external training outputs; they are not generated by running the notebook alone.
