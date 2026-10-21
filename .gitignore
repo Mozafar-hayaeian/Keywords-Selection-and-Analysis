@@ -1,0 +1,19 @@
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+*.py[cod]
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Large generated/downloaded data
+data/database.csv
+data/benchmarks/
+benchmarks/*.zip
+models/
+results/
+SEKE_keyword_extraction/
