@@ -35,7 +35,7 @@ Task 10 uses independent data splits and trains three separate SEKE models: one 
 
 1. In the main notebook, run Task 10 step 1. It reads the three original ZIP archives from `benchmarks/`, creates `data/benchmarks/*.csv`, and writes `data/Inspec/`, `data/kdd/`, and `data/SemEval2017/` JSONL inputs inside the SEKE repository.
 2. In the normal notebook environment, run Task 10 step 2 to add the four extractor columns to the benchmark CSVs. This step is required before Task 10 step 3.
-3. In Anaconda Prompt, activate `seke`, change to the SEKE repository directory, and run the batch file:
+3. Copy `scripts/run_seke_task10.bat` from this project into the root of the external SEKE repository (the folder containing `train.py`). In Anaconda Prompt, activate `seke`, change to that SEKE repository directory, and run:
 
    ```bat
    run_seke_task10.bat
