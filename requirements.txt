@@ -1,0 +1,13 @@
+ipykernel
+jupyter
+matplotlib
+networkx
+nltk
+numpy
+pandas
+python-Levenshtein
+rake-nltk
+requests
+scikit-learn
+fuzzywuzzy
+yake
