@@ -11,23 +11,23 @@ Use the main notebook environment (for example, `mozafar`) for dataset preparati
 
    ```bat
    conda activate seke
-   cd /d "C:\\path\\to\\SEKE_keyword_extraction"
+   cd /d "C:\path\to\SEKE_keyword_extraction"
    ```
 
 3. Preprocess the two exported files:
 
    ```bat
-   python preprocessing.py --input_path data\\pubmed\\train_all.jsonl --output_path data\\pubmed\\train_all_tokens.jsonl
-   python preprocessing.py --input_path data\\pubmed\\test.jsonl --output_path data\\pubmed\\test_tokens.jsonl
+   python preprocessing.py --input_path data\pubmed\train_all.jsonl --output_path data\pubmed\train_all_tokens.jsonl
+   python preprocessing.py --input_path data\pubmed\test.jsonl --output_path data\pubmed\test_tokens.jsonl
    ```
 
 4. Train the final PubMed model using SEKE's default configuration:
 
    ```bat
-   python train.py --run_name pubmed_moe_rnn_default --valid_path data\\pubmed\\train_all_tokens.jsonl --test_path data\\pubmed\\test_tokens.jsonl --moe --rnn
+   python train.py --run_name pubmed_moe_rnn_default --valid_path data\pubmed\train_all_tokens.jsonl --test_path data\pubmed\test_tokens.jsonl --moe --rnn
    ```
 
-   The expected output is `results\\pubmed_moe_rnn_default_seed_42.tsv` inside the SEKE repository.
+   The expected output is `results\pubmed_moe_rnn_default_seed_42.tsv` inside the SEKE repository.
 
 5. Return to the main notebook and run **Task 8, step 3** to evaluate the saved output. If SEKE is not in the default `SEKE_keyword_extraction/` folder beside the notebook, set `SEKE_FOLDER` before starting Jupyter. If its output directory is elsewhere, set `SEKE_RESULTS_FOLDER` too.
 
@@ -41,20 +41,20 @@ Task 10 trains a separate SEKE model for each benchmark dataset. Run these steps
 
    ```bat
    conda activate seke
-   cd /d "C:\\path\\to\\SEKE_keyword_extraction"
+   cd /d "C:\path\to\SEKE_keyword_extraction"
    ```
 
    The helper script `run_seke_task10.bat` is in the root of this project. Run it by its full path; you do not need to copy it into the SEKE folder:
 
    ```bat
-   call "C:\\path\\to\\Keywords-Selection-and-Analysis\\run_seke_task10.bat"
+   call "C:\path\to\Keywords-Selection-and-Analysis\run_seke_task10.bat"
    ```
 
    Replace the example paths with the actual folders on your computer. The script preprocesses and trains the three datasets sequentially and writes:
 
-   - `results\\task10_Inspec_seed_42.tsv`
-   - `results\\task10_kdd_seed_42.tsv`
-   - `results\\task10_SemEval2017_seed_42.tsv`
+   - `results\task10_Inspec_seed_42.tsv`
+   - `results\task10_kdd_seed_42.tsv`
+   - `results\task10_SemEval2017_seed_42.tsv`
 
    If a dataset's expected output file already exists, the script skips that dataset. If a run stops with an error, read the error first; after fixing the cause, run the script again.
 
