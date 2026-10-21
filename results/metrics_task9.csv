@@ -1,0 +1,5 @@
+method,P@10,R@10,F1@10,R-precision,PR-AUC
+yake + title w2v,0.124,0.2491,0.1628,0.1916,0.0741
+task 7 features,0.1805,0.3658,0.2383,0.257,0.1251
++ embedding features,0.1765,0.3564,0.2327,0.2569,0.1167
++ embeddings + diversity (penalty 0.1),0.174,0.3515,0.2295,0.2598,0.1162
