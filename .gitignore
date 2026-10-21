@@ -11,9 +11,9 @@ __pycache__/
 !.env.example
 
 # Large generated/downloaded data
-data/database.csv
 data/benchmarks/
 benchmarks/*.zip
 models/
-results/
+results/*.png
+results/*_test_predictions.csv
 SEKE_keyword_extraction/
