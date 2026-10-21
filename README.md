@@ -12,7 +12,7 @@ The main implementation is in the [Jupyter notebook](Project1_Keywords_Selection
 - `benchmarks/` — the three source ZIP archives used in Task 10. See [benchmarks/README.md](benchmarks/README.md).
 - `results/` — saved evaluation metric tables.
 - `docs/SEKE_TRAINING.md` — the training workflow for SEKE in Tasks 8 and 10.
-- `run_seke_task10.bat` — helper script for training SEKE on all three Task 10 datasets. It is stored here for visibility, but must be run while the current directory is the separate SEKE repository.
+- `docs/run_seke_task10.bat` — helper script for training SEKE on all three Task 10 datasets. Run it while the current directory is the separate SEKE repository.
 
 ## 1. Set up the main notebook environment
 
