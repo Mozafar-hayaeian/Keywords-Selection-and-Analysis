@@ -1,5 +1,5 @@
 # Results
 
-Running the notebook generates evaluation tables (`metrics_*.csv`) and precision–recall plots (`pr_curves_*.png`) in this directory. Tasks 7 and 9 also write test prediction tables.
+The `metrics_*.csv` files in this directory are the saved evaluation tables from the project. Running the notebook can regenerate these tables and the corresponding precision–recall plots (`pr_curves_*.png`). Tasks 7 and 9 also write test prediction tables locally.
 
-These are generated outputs, so they are not committed by default. To reproduce comparisons, keep the same input database, train/test split, and external SEKE prediction files.
+For valid comparisons, use the same PubMed database snapshot, train/test split, and external SEKE prediction files as the saved run.
