@@ -44,7 +44,7 @@ Task 10 trains a separate SEKE model for each benchmark dataset. Run these steps
    cd /d "C:\path\to\SEKE_keyword_extraction"
    ```
 
-   The helper script `run_seke_task10.bat` is in the root of this project. Run it by its full path; you do not need to copy it into the SEKE folder:
+   The helper script is located at [`docs/run_seke_task10.bat`](run_seke_task10.bat) in this project. Run it by its full path; you do not need to copy it into the SEKE folder:
 
    ```bat
    call "C:\path\to\Keywords-Selection-and-Analysis\run_seke_task10.bat"
