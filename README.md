@@ -8,10 +8,10 @@ The notebook implements Tasks 1–10 of the project: PubMed collection, TF-IDF/R
 
 - `Project1_Keywords_Selection_and_Analysis.ipynb` — main notebook, with the implementation organized by task.
 - `requirements.txt` — Python packages used by the notebook.
-- `data/` — generated datasets. Task 1 writes the PubMed database to `data/database.csv`; Task 10 writes processed benchmark tables under `data/benchmarks/`.
+- `data/database.csv` — expected PubMed snapshot. The original snapshot is not included in this repository yet; see the data instructions below.
 - `benchmarks/` — source ZIP files required by Task 10.
 - `models/` — downloaded word2vec model files used by Tasks 6 and 9.
-- `results/` — evaluation tables and precision–recall plots produced by the notebook.
+- `results/metrics_*.csv` — saved evaluation tables from the project. The notebook can regenerate them; precision–recall plots are generated locally.
 
 ## Setup
 
@@ -40,9 +40,11 @@ Open the notebook and run the cells in order. Some later task cells reuse functi
 
 ### PubMed database
 
-The Task 1 cell collects records from NCBI PubMed and writes `data/database.csv`. It uses a fixed search query and attempts to collect up to 1,000 records with author keywords. PubMed may change over time, so a newly collected database may not match the exact snapshot used for previously saved metrics.
+The notebook's Task 1 cell collects records from NCBI PubMed and writes `data/database.csv`. It uses a fixed search query and attempts to collect up to 1,000 records with author keywords. PubMed may change over time, so a newly collected database may not match the exact snapshot used for the saved metrics.
 
-Set the `NCBI_EMAIL` environment variable before running Task 1 if you want to provide an email address to NCBI. An NCBI API key is optional; the notebook's `API_KEY` setting can be configured locally if you have one. Do not commit personal emails or API keys.
+**To reproduce the saved results using the original data**, extract `Report_Evidence_Bundle/Data_01/database.csv` from the provided evidence archive and place it at `data/database.csv`. This exact snapshot is not included in the repository yet. Alternatively, run Task 1 to collect a fresh dataset, but expect the results to differ.
+
+Set the `NCBI_EMAIL` environment variable before running Task 1 if you want to provide an email address to NCBI. An NCBI API key is optional; set `NCBI_API_KEY` locally if you have one. Do not commit personal emails or API keys.
 
 ### Benchmark datasets
 
@@ -66,11 +68,11 @@ SEKE has its own heavier dependencies and should be installed and run according 
 
 ## Outputs
 
-The notebook writes evaluation metric CSV files and precision–recall plots under `results/`. Task 7 and Task 9 also save test predictions there. Keep the same data snapshot, split settings, and model outputs when comparing metrics across tasks.
+The saved metric tables are in `results/`. Running the notebook generates precision–recall plots and can regenerate the evaluation tables. Task 7 and Task 9 also save test predictions locally.
 
 ## Notes on reproducibility
 
 - The evaluation split used by the supervised tasks is based on `test_size=0.2` and `random_state=42`.
 - Tasks 4–6 and later reuse helpers defined by earlier cells; execute the notebook from top to bottom.
 - The benchmark ZIP files and the separate SEKE repository are external inputs. Results may be skipped or unavailable until their expected files are present.
-- A fresh PubMed download is not guaranteed to reproduce a past run exactly. For strict comparison with past results, retain the original database snapshot and prediction files alongside the generated metrics.
+- For strict comparison with past results, retain the original database snapshot, prediction files, and external SEKE outputs alongside the metrics.
