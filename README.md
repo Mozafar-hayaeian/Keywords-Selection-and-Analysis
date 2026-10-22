@@ -1,4 +1,4 @@
-# Keywords Selection and Analysis 1
+# Project 1: Keywords Selection and Analysis 1
 University NLP project for extracting keywords from biomedical abstracts and evaluating the results against author-provided keywords.
 
 The main implementation is in the [Jupyter notebook](Project1_Keywords_Selection_and_Analysis.ipynb). Follow the steps below in order.
